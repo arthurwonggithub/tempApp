@@ -20,10 +20,8 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Grant gradlew executable permission
-        run: chmod +x gradlew
-
       - name: Run Build (Android)
         run: |
           cd android
+          chmod +x ./gradlew
           ./gradlew assembleDebug
