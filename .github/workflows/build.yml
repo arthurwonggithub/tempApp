@@ -3,6 +3,7 @@ name: Build React Native App
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -25,3 +26,13 @@ jobs:
           cd android
           chmod +x ./gradlew
           ./gradlew assembleDebug
+      - name: Locate APKs
+        run: |
+          echo "Built APKs:"
+          find android/app/build/outputs -type f -name '*.apk' -print || true
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: android/app/build/outputs/**/*.apk
